@@ -1,0 +1,457 @@
+:root {
+  color: #edf2ff;
+  background: #07080d;
+  color-scheme: dark;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(226, 184, 93, 0.08), transparent 38%),
+    linear-gradient(25deg, rgba(107, 211, 204, 0.1), transparent 42%),
+    #07080d;
+}
+
+.app-shell::before {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  content: "";
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 42px,
+      rgba(216, 229, 255, 0.06) 43px,
+      transparent 45px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 92px,
+      rgba(226, 184, 93, 0.04) 94px,
+      transparent 96px
+    );
+}
+
+.app-shell::after {
+  position: absolute;
+  inset: auto -12vw -18vh auto;
+  z-index: -1;
+  width: min(72vw, 760px);
+  height: min(64vh, 620px);
+  content: "";
+  background: url("../assets/celestial-stair.svg") center / contain no-repeat;
+  opacity: 0.28;
+  transform: rotate(-4deg);
+}
+
+.screen {
+  width: min(1120px, 100%);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 56px);
+}
+
+.title-screen {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.78fr);
+  align-items: center;
+  gap: clamp(28px, 6vw, 76px);
+}
+
+.title-copy {
+  max-width: 680px;
+}
+
+.eyebrow,
+.sequence-line,
+.stage-line,
+.game-footer,
+.score-item span,
+.result-grid span {
+  color: #aeb9d1;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  font-size: clamp(0.82rem, 1.6vw, 0.95rem);
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 880px;
+  margin-bottom: 22px;
+  color: #fff8df;
+  font-size: clamp(3rem, 9vw, 7.8rem);
+  line-height: 0.9;
+  letter-spacing: 0;
+}
+
+h2 {
+  margin-bottom: 8px;
+  color: #fff8df;
+  font-size: clamp(2rem, 5vw, 4.4rem);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.lead {
+  max-width: 640px;
+  margin-bottom: 32px;
+  color: #d8e5ff;
+  font-size: clamp(1.05rem, 2.2vw, 1.32rem);
+  line-height: 1.65;
+}
+
+.title-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.primary-action,
+.secondary-action {
+  min-height: 48px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0 20px;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.primary-action {
+  color: #09100f;
+  background: #f3c96d;
+  box-shadow: 0 12px 40px rgba(226, 184, 93, 0.24);
+}
+
+.secondary-action {
+  color: #edf2ff;
+  background: rgba(8, 11, 18, 0.78);
+  border-color: rgba(216, 229, 255, 0.22);
+}
+
+.primary-action:hover,
+.secondary-action:hover {
+  transform: translateY(-2px);
+}
+
+.secondary-action:hover {
+  border-color: rgba(107, 211, 204, 0.72);
+  color: #c7fff9;
+}
+
+.compact {
+  min-height: 42px;
+}
+
+.title-art {
+  width: min(100%, 520px);
+  border: 1px solid rgba(216, 229, 255, 0.14);
+  border-radius: 8px;
+  opacity: 0.86;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+}
+
+.game-screen {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 4vh, 32px);
+}
+
+.score-board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.score-item,
+.result-grid div {
+  min-height: 76px;
+  border: 1px solid rgba(216, 229, 255, 0.14);
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: rgba(7, 8, 13, 0.72);
+}
+
+.score-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.score-item strong,
+.result-grid strong {
+  color: #fff8df;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+}
+
+.question-panel {
+  padding: clamp(18px, 4vw, 28px) 0 0;
+}
+
+.stage-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+}
+
+.stage-line span {
+  border: 1px solid rgba(216, 229, 255, 0.16);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: rgba(7, 8, 13, 0.62);
+}
+
+.sequence-line {
+  margin: 0;
+  font-size: clamp(0.95rem, 2vw, 1.12rem);
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 3vw, 22px);
+  width: min(760px, 100%);
+}
+
+.number-card {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(132px, 24vh, 220px);
+  border: 1px solid rgba(216, 229, 255, 0.18);
+  border-radius: 8px;
+  color: #edf2ff;
+  background:
+    linear-gradient(150deg, rgba(216, 229, 255, 0.11), rgba(7, 8, 13, 0.9)),
+    #10131c;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
+}
+
+.number-card::before {
+  position: absolute;
+  inset: 14px;
+  content: "";
+  border-top: 1px solid rgba(107, 211, 204, 0.2);
+  border-bottom: 1px solid rgba(226, 184, 93, 0.18);
+}
+
+.number-card span {
+  position: relative;
+  font-size: clamp(2.7rem, 12vw, 6.8rem);
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.number-card:not(:disabled):hover {
+  transform: translateY(-4px);
+  border-color: rgba(107, 211, 204, 0.78);
+  box-shadow: 0 18px 60px rgba(107, 211, 204, 0.12);
+}
+
+.number-card--correct {
+  border-color: rgba(245, 212, 123, 0.96);
+  color: #fff9da;
+  background:
+    linear-gradient(150deg, rgba(245, 212, 123, 0.32), rgba(37, 32, 18, 0.92)),
+    #1c1710;
+  box-shadow:
+    0 0 0 1px rgba(245, 212, 123, 0.34),
+    0 0 42px rgba(245, 212, 123, 0.38);
+  animation: glow-step 680ms ease both;
+}
+
+.number-card--wrong {
+  border-color: rgba(255, 112, 112, 0.82);
+  color: #ffe4e4;
+  background:
+    linear-gradient(150deg, rgba(255, 112, 112, 0.26), rgba(32, 13, 18, 0.92)),
+    #1a1012;
+  animation: wrong-shake 420ms ease both;
+}
+
+.number-card--dim {
+  opacity: 0.34;
+}
+
+.game-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: min(760px, 100%);
+  min-height: 48px;
+}
+
+.result-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  width: min(760px, 100%);
+  margin: 0 0 30px;
+}
+
+.result-grid div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@keyframes glow-step {
+  0% {
+    transform: scale(0.98);
+  }
+
+  60% {
+    transform: scale(1.035);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes wrong-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-9px);
+  }
+
+  40% {
+    transform: translateX(8px);
+  }
+
+  60% {
+    transform: translateX(-5px);
+  }
+
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+@media (max-width: 760px) {
+  .screen {
+    padding: 22px;
+  }
+
+  .title-screen {
+    grid-template-columns: 1fr;
+    align-content: center;
+  }
+
+  .title-art {
+    order: -1;
+    width: min(100%, 360px);
+  }
+
+  h1 {
+    font-size: clamp(2.7rem, 15vw, 4.8rem);
+  }
+
+  .score-board,
+  .result-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .choice-grid {
+    gap: 12px;
+  }
+
+  .number-card {
+    min-height: clamp(120px, 22vh, 180px);
+  }
+}
+
+@media (max-width: 460px) {
+  .screen {
+    padding: 18px;
+  }
+
+  .title-actions,
+  .game-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .primary-action,
+  .secondary-action {
+    width: 100%;
+  }
+
+  .score-item,
+  .result-grid div {
+    min-height: 68px;
+    padding: 12px;
+  }
+
+  .choice-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .number-card {
+    min-height: 112px;
+  }
+}

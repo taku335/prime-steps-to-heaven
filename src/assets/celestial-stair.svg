@@ -1,0 +1,18 @@
+<svg width="760" height="620" viewBox="0 0 760 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="760" height="620" fill="#07080d"/>
+  <path d="M55 491h132v-34h91v-38h96v-42h103v-46h112v-50h120" stroke="#e2b85d" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M78 526c84-47 156-69 231-77 132-15 230-71 357-178" stroke="#6bd3cc" stroke-width="2" stroke-opacity=".55"/>
+  <path d="M70 160h606M70 185h606M70 210h606M70 235h606M70 260h606" stroke="#d8e5ff" stroke-opacity=".18" stroke-width="2"/>
+  <path d="M112 124l12 24 26 4-19 18 5 26-24-12-23 12 4-26-19-18 27-4 11-24Z" fill="#f5d47b" fill-opacity=".78"/>
+  <path d="M596 94l7 15 17 3-12 11 3 17-15-8-15 8 3-17-12-11 17-3 7-15Z" fill="#6bd3cc" fill-opacity=".72"/>
+  <path d="M469 144l5 11 12 1-9 9 2 12-10-6-11 6 2-12-9-9 12-1 6-11Z" fill="#e9efff" fill-opacity=".6"/>
+  <path d="M240 78l4 8 9 2-7 6 2 9-8-4-8 4 1-9-6-6 9-2 4-8Z" fill="#e9efff" fill-opacity=".45"/>
+  <text x="96" y="357" fill="#d8e5ff" fill-opacity=".23" font-family="monospace" font-size="22">2 3 5 7 11 13</text>
+  <text x="374" y="505" fill="#6bd3cc" fill-opacity=".22" font-family="monospace" font-size="24">89 97 101 103</text>
+  <text x="334" y="130" fill="#f5d47b" fill-opacity=".22" font-family="monospace" font-size="20">121 143 169</text>
+  <circle cx="186" cy="91" r="3" fill="#d8e5ff" fill-opacity=".65"/>
+  <circle cx="659" cy="367" r="3" fill="#d8e5ff" fill-opacity=".55"/>
+  <circle cx="514" cy="548" r="2.5" fill="#f5d47b" fill-opacity=".6"/>
+  <circle cx="283" cy="298" r="2" fill="#6bd3cc" fill-opacity=".55"/>
+  <path d="M0 619h760" stroke="#e2b85d" stroke-opacity=".3"/>
+</svg>

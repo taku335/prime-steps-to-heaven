@@ -1,4 +1,4 @@
-import type { GameMode, GameStats } from '../App';
+import type { GameMode, GameStats } from '../types/game';
 
 type ScoreBoardProps = {
   mode: GameMode;

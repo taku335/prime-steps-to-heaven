@@ -1,11 +1,12 @@
 import stairwayArt from '../assets/celestial-stair.svg';
-import type { GameMode } from '../App';
+import type { GameMode } from '../types/game';
 
 type TitleScreenProps = {
   onStart: (mode: GameMode) => void;
+  onOpenPrimeTable: () => void;
 };
 
-export function TitleScreen({ onStart }: TitleScreenProps) {
+export function TitleScreen({ onStart, onOpenPrimeTable }: TitleScreenProps) {
   return (
     <main className="screen title-screen">
       <div className="title-copy">
@@ -21,6 +22,9 @@ export function TitleScreen({ onStart }: TitleScreenProps) {
           </button>
           <button className="secondary-action" type="button" onClick={() => onStart('timed')}>
             60 Second Challenge
+          </button>
+          <button className="secondary-action" type="button" onClick={onOpenPrimeTable}>
+            Prime Table
           </button>
         </div>
       </div>

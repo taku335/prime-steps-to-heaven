@@ -1,21 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { GameScreen } from './components/GameScreen';
+import { PrimeTablePage } from './components/PrimeTablePage';
 import { ResultScreen } from './components/ResultScreen';
 import { TitleScreen } from './components/TitleScreen';
 import { getStageForQuestion } from './lib/difficulty';
 import { generateQuestion, type Question } from './lib/question';
+import type { AnswerHistory, GameMode, GameStats } from './types/game';
 
-export type GameMode = 'ascent' | 'timed';
-
-export type GameStats = {
-  correct: number;
-  answered: number;
-  streak: number;
-  bestStreak: number;
-  score: number;
-};
-
-type Screen = 'title' | 'game' | 'result';
+type Screen = 'title' | 'game' | 'result' | 'prime-table';
 
 type Feedback = {
   selected: number;
@@ -25,6 +17,7 @@ type Feedback = {
 type ResultState = {
   mode: GameMode;
   stats: GameStats;
+  history: AnswerHistory[];
 };
 
 const NORMAL_QUESTION_LIMIT = 15;
@@ -52,15 +45,22 @@ function App() {
   const [stats, setStats] = useState<GameStats>(initialStats);
   const [question, setQuestion] = useState<Question>(() => createQuestion(0));
   const [feedback, setFeedback] = useState<Feedback | null>(null);
+  const [history, setHistory] = useState<AnswerHistory[]>([]);
   const [result, setResult] = useState<ResultState | null>(null);
   const [timeLeft, setTimeLeft] = useState(TIMED_SECONDS);
   const timerStartedAt = useRef<number>(0);
+  const questionStartedAt = useRef<number>(Date.now());
   const autoAdvanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const statsRef = useRef(stats);
+  const historyRef = useRef(history);
 
   useEffect(() => {
     statsRef.current = stats;
   }, [stats]);
+
+  useEffect(() => {
+    historyRef.current = history;
+  }, [history]);
 
   const clearAutoAdvance = useCallback(() => {
     if (autoAdvanceTimer.current) {
@@ -70,9 +70,9 @@ function App() {
   }, []);
 
   const finishGame = useCallback(
-    (finalStats: GameStats = statsRef.current) => {
+    (finalStats: GameStats = statsRef.current, finalHistory: AnswerHistory[] = historyRef.current) => {
       clearAutoAdvance();
-      setResult({ mode, stats: finalStats });
+      setResult({ mode, stats: finalStats, history: finalHistory });
       setFeedback(null);
       setScreen('result');
     },
@@ -80,15 +80,16 @@ function App() {
   );
 
   const moveToNextQuestion = useCallback(
-    (latestStats: GameStats = statsRef.current) => {
+    (latestStats: GameStats = statsRef.current, latestHistory: AnswerHistory[] = historyRef.current) => {
       clearAutoAdvance();
 
       if (mode === 'ascent' && latestStats.answered >= NORMAL_QUESTION_LIMIT) {
-        finishGame(latestStats);
+        finishGame(latestStats, latestHistory);
         return;
       }
 
       setQuestion(createQuestion(latestStats.answered));
+      questionStartedAt.current = Date.now();
       setFeedback(null);
     },
     [clearAutoAdvance, finishGame, mode],
@@ -100,7 +101,11 @@ function App() {
       const freshStats = { ...initialStats };
       setMode(nextMode);
       setStats(freshStats);
+      statsRef.current = freshStats;
+      setHistory([]);
+      historyRef.current = [];
       setQuestion(createQuestion(0));
+      questionStartedAt.current = Date.now();
       setFeedback(null);
       setResult(null);
       setTimeLeft(TIMED_SECONDS);
@@ -117,6 +122,7 @@ function App() {
       }
 
       const isCorrect = value === question.answer;
+      const elapsedMs = Date.now() - questionStartedAt.current;
       const nextStreak = isCorrect ? stats.streak + 1 : 0;
       const nextStats: GameStats = {
         correct: stats.correct + (isCorrect ? 1 : 0),
@@ -125,15 +131,28 @@ function App() {
         bestStreak: Math.max(stats.bestStreak, nextStreak),
         score: stats.score + (isCorrect ? getScoreForCorrectAnswer(question.stage, nextStreak) : 0),
       };
+      const historyItem: AnswerHistory = {
+        questionNumber: stats.answered + 1,
+        stage: question.stage,
+        choices: [...question.choices],
+        correctAnswer: question.answer,
+        selectedAnswer: value,
+        isCorrect,
+        elapsedMs,
+      };
+      const nextHistory = [...historyRef.current, historyItem];
 
       setStats(nextStats);
+      statsRef.current = nextStats;
+      setHistory(nextHistory);
+      historyRef.current = nextHistory;
       setFeedback({ selected: value, isCorrect });
 
       autoAdvanceTimer.current = setTimeout(() => {
-        moveToNextQuestion(nextStats);
+        moveToNextQuestion(nextStats, nextHistory);
       }, 1000);
     },
-    [feedback, moveToNextQuestion, question.answer, question.stage, stats],
+    [feedback, moveToNextQuestion, question, stats],
   );
 
   useEffect(() => {
@@ -159,7 +178,15 @@ function App() {
   if (screen === 'title') {
     return (
       <div className="app-shell">
-        <TitleScreen onStart={startGame} />
+        <TitleScreen onStart={startGame} onOpenPrimeTable={() => setScreen('prime-table')} />
+      </div>
+    );
+  }
+
+  if (screen === 'prime-table') {
+    return (
+      <div className="app-shell">
+        <PrimeTablePage onStart={startGame} onTitle={() => setScreen('title')} />
       </div>
     );
   }
@@ -170,6 +197,7 @@ function App() {
         <ResultScreen
           mode={result.mode}
           stats={result.stats}
+          history={result.history}
           onRestart={startGame}
           onTitle={() => setScreen('title')}
         />

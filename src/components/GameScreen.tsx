@@ -1,5 +1,5 @@
-import type { GameMode, GameStats } from '../App';
 import type { Question } from '../lib/question';
+import type { GameMode, GameStats } from '../types/game';
 import { getDifficulty } from '../lib/difficulty';
 import { NumberCard, type NumberCardState } from './NumberCard';
 import { ScoreBoard } from './ScoreBoard';
